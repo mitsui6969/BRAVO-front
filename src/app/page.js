@@ -1,3 +1,4 @@
+// 一番最初に表示される画面
 "use client"
 import { useState, useEffect } from 'react';
 
@@ -12,6 +13,7 @@ export default function Home() {
   const fetchItems = async () => {
     const res = await fetch('http://127.0.0.1:5000/items');
     const data = await res.json();
+    console.log(data);
     setItems(data);
   };
 
@@ -25,7 +27,21 @@ export default function Home() {
       body: JSON.stringify({ name: newItem }),
     });
     const data = await res.json();
+    fetchItems();
     setItems([...items, data]);
+    setNewItem('');
+  };
+
+  const deletItem = async ( itemId ) => {
+    const res = await fetch('http://127.0.0.1:5000/deletItem', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ item_id: itemId }),
+    });
+    const data = await res.json();
+    setItems(items.filter(item => item.id !== itemId));
     setNewItem('');
   };
 
@@ -33,8 +49,11 @@ export default function Home() {
     <div>
       <h1>Next.js + Flask + SQLite</h1>
       <ul>
-        {items.map((item, index) => (
-          <li key={index}>{item}</li>
+        {items.map((item) => (
+          <li key={item.id}>
+            {item.name}
+            <button onClick={() => deletItem(item.id)}>Del</button>
+          </li>
         ))}
       </ul>
       <input
