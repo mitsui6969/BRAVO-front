@@ -1,3 +1,4 @@
+// http//~~~/Startのページ
 import React from 'react'
 
 function Start() {
