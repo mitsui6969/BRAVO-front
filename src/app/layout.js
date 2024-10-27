@@ -1,5 +1,4 @@
 // 全画面共通のレイアウト
-import { NextURL } from "next/dist/server/web/next-url"
 import Link from "next/link"
 
 export const metadata = {
@@ -12,7 +11,9 @@ export default function RootLayout({ children }) {
     <html lang="jp">
       <body>
         <div className="header">
+          <Link href={"/"}>/Home</Link>
           <Link href={"/Start"}>/Start</Link>
+          <Link href={"/Develop"}>/Develop</Link>
         </div>
 
         <div>{children}</div>
