@@ -60,8 +60,9 @@ function Story() {
         }
     };
 
-    const handleChoice = (choice) => {
+    const handleChoice = async(choice) => {
         console.log("選択肢:", choice.content);
+        console.log("送信するデータ:", JSON.stringify({ choice: choice.id, chapter: chapter }));
         const nextProgress = choice.start;
         setProgress(nextProgress);
 
@@ -72,6 +73,22 @@ function Story() {
 
         // 選択肢の範囲（end）を設定
         setChoiceEnd(choice.end);
+
+        try {
+            const res = await fetch('http://127.0.0.1:5000/story/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ choice: choice.id, chapter: chapter }),
+            });
+            if (!res.ok) {
+                throw new Error("Failed to save choice data");
+            }
+            console.log("選択が保存されました");
+        } catch (error) {
+            console.error("選択肢の保存でエラーが発生しました:", error);
+        }
     };
 
     return (
