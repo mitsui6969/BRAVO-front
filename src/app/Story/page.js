@@ -27,7 +27,35 @@ function Story() {
             setChoiceEnd(null); // 選択肢の範囲をリセット
             if (res.data.length > 0) {
                 setDisplay(res.data[0].sentence); // 最初のセリフを表示
-                setPeople(res.data[0].people); // 最初の話者を設定
+
+                // 最初の話者を設定
+                switch(res.data[0].people){
+                    case 0:
+                        setPeople("")
+                        return
+                    case 1:
+                        setPeople("??")
+                        return
+                    case 2:
+                        setPeople("グレンツェ")
+                        return
+                    case 3:
+                        setPeople("ピーゲル")
+                        return
+                    case 4:
+                        setPeople("トルテ")
+                        return
+                    case 5:
+                        setPeople("欲望の王")
+                        return
+                    case 6:
+                        setPeople("氷の女王")
+                        return
+                    case 7:
+                        setPeople("トロイ")
+                        return
+                }
+                // setPeople(res.data[0].people); // 最初の話者を設定
             }
         } catch (error) {
             console.error("axiosのエラーが発生しました:", error);
@@ -44,7 +72,7 @@ function Story() {
                 console.log("選択肢の終わりに達しました");
                 if (chapter === 4) {
                     // 4章が終了したら /Home にリダイレクト
-                    router.push("/");
+                    router.push("/Ending");
                 } else {
                     setChapter(chapter + 1);
                 }
@@ -62,12 +90,39 @@ function Story() {
                 setChoices([]); // 選択肢をクリア
             }
 
-            setPeople(nextSentence.people);
+            // setPeople(nextSentence.people);
+            switch(nextSentence.people){
+                case 0:
+                    setPeople("")
+                    return
+                case 1:
+                    setPeople("??")
+                    return
+                case 2:
+                    setPeople("グレンツェ")
+                    return
+                case 3:
+                    setPeople("ピーゲル")
+                    return
+                case 4:
+                    setPeople("トルテ")
+                    return
+                case 5:
+                    setPeople("欲望の王")
+                    return
+                case 6:
+                    setPeople("氷の女王")
+                    return
+                case 7:
+                    setPeople("トロイ")
+                    return
+            }
+
         } else if (chapterData) {
             console.log("最後のセリフです"); // 最後のセリフに達したらメッセージを表示
             if (chapter === 4) {
                 // 4章が終了したら /Home にリダイレクト
-                router.push("/");
+                router.push("/Ending");
             } else {
                 setChapter(chapter + 1);
             }
