@@ -1,24 +1,27 @@
-'use client'
+"use client"
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 function Story() {
+    const router = useRouter();
 
     const [progress, setProgress] = useState(0); // ストーリーの進行
     const [display, setDisplay] = useState(''); // 表示する台詞
     const [people, setPeople] = useState(null); // 話者のキャラクター
-    const [chapter, setChapter] = useState(1); // 現在の章
+    const [chapter, setChapter] = useState(3); // 現在の章
     const [chapterData, setChapterData] = useState(null); // 章のデータ
     const [choices, setChoices] = useState([]); // 選択肢のデータ
     const [choiceEnd, setChoiceEnd] = useState(null); // 選択肢の終わりのインデックス
 
     useEffect(() => {
         fetchStory();
-    }, []);
+    }, [chapter]);
 
     const fetchStory = async () => {
         try {
-            const res = await axios.get('http://127.0.0.1:5000/story/3');
+            const res = await axios.get(`http://127.0.0.1:5000/story/${chapter}`);
             setChapterData(res.data); // データ全体を保存
             setProgress(0); // 進捗をリセット
             setChoiceEnd(null); // 選択肢の範囲をリセット
@@ -39,6 +42,12 @@ function Story() {
             // 選択肢範囲の終わりに達した場合、進行を止める
             if (choiceEnd !== null && nextProgress > choiceEnd) {
                 console.log("選択肢の終わりに達しました");
+                if (chapter === 4) {
+                    // 4章が終了したら /Home にリダイレクト
+                    router.push("/");
+                } else {
+                    setChapter(chapter + 1);
+                }
                 return;
             }
 
@@ -53,10 +62,15 @@ function Story() {
                 setChoices([]); // 選択肢をクリア
             }
 
-            setPeople(nextSentence.people); // 話者を更新
+            setPeople(nextSentence.people);
         } else if (chapterData) {
             console.log("最後のセリフです"); // 最後のセリフに達したらメッセージを表示
-            setChapter(chapter + 1);
+            if (chapter === 4) {
+                // 4章が終了したら /Home にリダイレクト
+                router.push("/");
+            } else {
+                setChapter(chapter + 1);
+            }
         }
     };
 
