@@ -1,8 +1,11 @@
-'use client'
+"use client"
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 function Story() {
+    const router = useRouter();
 
     const [progress, setProgress] = useState(0); // ストーリーの進行
     const [display, setDisplay] = useState(''); // 表示する台詞
@@ -14,7 +17,7 @@ function Story() {
 
     useEffect(() => {
         fetchStory();
-    }, []);
+    }, [chapter]);
 
     const fetchStory = async () => {
         try {
@@ -39,6 +42,12 @@ function Story() {
             // 選択肢範囲の終わりに達した場合、進行を止める
             if (choiceEnd !== null && nextProgress > choiceEnd) {
                 console.log("選択肢の終わりに達しました");
+                if (chapter === 4) {
+                    // 4章が終了したら /Home にリダイレクト
+                    router.push("/");
+                } else {
+                    setChapter(chapter + 1);
+                }
                 return;
             }
 
@@ -53,10 +62,15 @@ function Story() {
                 setChoices([]); // 選択肢をクリア
             }
 
-            setPeople(nextSentence.people); // 話者を更新
+            setPeople(nextSentence.people);
         } else if (chapterData) {
             console.log("最後のセリフです"); // 最後のセリフに達したらメッセージを表示
-            setChapter(chapter + 1);
+            if (chapter === 4) {
+                // 4章が終了したら /Home にリダイレクト
+                router.push("/");
+            } else {
+                setChapter(chapter + 1);
+            }
         }
     };
 
