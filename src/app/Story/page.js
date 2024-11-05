@@ -7,7 +7,7 @@ function Story() {
     const [progress, setProgress] = useState(0); // ストーリーの進行
     const [display, setDisplay] = useState(''); // 表示する台詞
     const [people, setPeople] = useState(null); // 話者のキャラクター
-    const [chapter, setChapter] = useState(1); // 現在の章
+    const [chapter, setChapter] = useState(3); // 現在の章
     const [chapterData, setChapterData] = useState(null); // 章のデータ
     const [choices, setChoices] = useState([]); // 選択肢のデータ
     const [choiceEnd, setChoiceEnd] = useState(null); // 選択肢の終わりのインデックス
@@ -18,7 +18,7 @@ function Story() {
 
     const fetchStory = async () => {
         try {
-            const res = await axios.get('http://127.0.0.1:5000/story/3');
+            const res = await axios.get(`http://127.0.0.1:5000/story/${chapter}`);
             setChapterData(res.data); // データ全体を保存
             setProgress(0); // 進捗をリセット
             setChoiceEnd(null); // 選択肢の範囲をリセット
