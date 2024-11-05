@@ -34,11 +34,11 @@ function Develop() {
 
     const deletItem = async ( itemId ) => {
         const res = await fetch('http://127.0.0.1:5000/deletItem', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ item_id: itemId }),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ item_id: itemId }),
         });
         const data = await res.json();
         setItems(items.filter(item => item.id !== itemId));
