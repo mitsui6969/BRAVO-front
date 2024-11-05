@@ -44,7 +44,7 @@ function Story() {
                 console.log("選択肢の終わりに達しました");
                 if (chapter === 4) {
                     // 4章が終了したら /Home にリダイレクト
-                    router.push("/");
+                    router.push("/Ending");
                 } else {
                     setChapter(chapter + 1);
                 }
@@ -67,7 +67,7 @@ function Story() {
             console.log("最後のセリフです"); // 最後のセリフに達したらメッセージを表示
             if (chapter === 4) {
                 // 4章が終了したら /Home にリダイレクト
-                router.push("/");
+                router.push("/Ending");
             } else {
                 setChapter(chapter + 1);
             }
