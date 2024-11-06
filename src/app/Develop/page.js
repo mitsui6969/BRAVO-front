@@ -1,4 +1,4 @@
-// 一番最初に表示される画面
+// 参考コード 最終的に消す
 "use client"
 import { useState, useEffect } from 'react';
 
