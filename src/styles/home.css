@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: url("/title.png"); /* publicフォルダ内の背景画像 */
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    flex-direction: column;
+}
+
+.titleContainer {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5); /* 背景が見やすくなるように半透明の背景を追加 */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+.title {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.startButton {
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #0070f3;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
