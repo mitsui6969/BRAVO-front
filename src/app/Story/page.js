@@ -1,12 +1,13 @@
-"use client"
-import React, { useState, useEffect } from 'react'
+"use client";
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 function Story() {
     const router = useRouter();
-
+    const searchParams = useSearchParams();
+    const unlockedChapterParam = searchParams.get('unlockedChapter');
     const [progress, setProgress] = useState(0); // ストーリーの進行
     const [display, setDisplay] = useState(''); // 表示する台詞
     const [people, setPeople] = useState(null); // 話者のキャラクター
@@ -16,72 +17,71 @@ function Story() {
     const [choiceEnd, setChoiceEnd] = useState(null); // 選択肢の終わりのインデックス
 
     useEffect(() => {
-        fetchStory();
-    }, [chapter]);
+        const initialChapter = unlockedChapterParam
+            ? parseInt(unlockedChapterParam.replace('chapter_', ''), 10)
+            : 1;
+        setChapter(initialChapter);
+        fetchStory(initialChapter); // 初期章に基づいてストーリーデータを取得
+    }, [unlockedChapterParam]);
 
-    const fetchStory = async () => {
+    const fetchStory = async (currentChapter) => {
         try {
-            const res = await axios.get(`http://127.0.0.1:5000/story/${chapter}`);
+            const res = await axios.get(`http://127.0.0.1:5000/story/${currentChapter}`);
             setChapterData(res.data); // データ全体を保存
             setProgress(0); // 進捗をリセット
             setChoiceEnd(null); // 選択肢の範囲をリセット
             if (res.data.length > 0) {
                 setDisplay(res.data[0].sentence); // 最初のセリフを表示
-
-                // 最初の話者を設定
-                switch(res.data[0].people){
-                    case 0:
-                        setPeople("")
-                        return
-                    case 1:
-                        setPeople("??")
-                        return
-                    case 2:
-                        setPeople("グレンツェ")
-                        return
-                    case 3:
-                        setPeople("ピーゲル")
-                        return
-                    case 4:
-                        setPeople("トルテ")
-                        return
-                    case 5:
-                        setPeople("欲望の王")
-                        return
-                    case 6:
-                        setPeople("氷の女王")
-                        return
-                    case 7:
-                        setPeople("トロイ")
-                        return
-                }
-                // setPeople(res.data[0].people); // 最初の話者を設定
+                setPeopleName(res.data[0].people); // 最初の話者を設定
             }
         } catch (error) {
             console.error("axiosのエラーが発生しました:", error);
         }
     };
 
+    const setPeopleName = (peopleCode) => {
+        switch (peopleCode) {
+            case 0:
+                setPeople("");
+                break;
+            case 1:
+                setPeople("??");
+                break;
+            case 2:
+                setPeople("グレンツェ");
+                break;
+            case 3:
+                setPeople("ピーゲル");
+                break;
+            case 4:
+                setPeople("トルテ");
+                break;
+            case 5:
+                setPeople("欲望の王");
+                break;
+            case 6:
+                setPeople("氷の女王");
+                break;
+            case 7:
+                setPeople("トロイ");
+                break;
+            default:
+                setPeople("");
+                break;
+        }
+    };
+
     const handleNextSentence = () => {
-        // 範囲外であれば進行しない
         if (chapterData && progress < chapterData.length - 1) {
             const nextProgress = progress + 1;
 
-            // 選択肢範囲の終わりに達した場合、進行を止める
             if (choiceEnd !== null && nextProgress > choiceEnd) {
-                console.log("選択肢の終わりに達しました");
-                if (chapter === 4) {
-                    // 4章が終了したら /Home にリダイレクト
-                    router.push("/Ending");
-                } else {
-                    setChapter(chapter + 1);
-                }
+                handleChapterCompletion();
                 return;
             }
 
             setProgress(nextProgress);
             const nextSentence = chapterData[nextProgress];
-
             if (nextSentence.state && Array.isArray(nextSentence.sentence)) {
                 setChoices(nextSentence.sentence); // 選択肢を設定
                 setDisplay(''); // セリフの表示を空にする
@@ -89,58 +89,22 @@ function Story() {
                 setDisplay(nextSentence.sentence); // 通常のセリフを表示
                 setChoices([]); // 選択肢をクリア
             }
-
-            // setPeople(nextSentence.people);
-            switch(nextSentence.people){
-                case 0:
-                    setPeople("")
-                    return
-                case 1:
-                    setPeople("??")
-                    return
-                case 2:
-                    setPeople("グレンツェ")
-                    return
-                case 3:
-                    setPeople("ピーゲル")
-                    return
-                case 4:
-                    setPeople("トルテ")
-                    return
-                case 5:
-                    setPeople("欲望の王")
-                    return
-                case 6:
-                    setPeople("氷の女王")
-                    return
-                case 7:
-                    setPeople("トロイ")
-                    return
-            }
+            setPeopleName(nextSentence.people);
 
         } else if (chapterData) {
-            console.log("最後のセリフです"); // 最後のセリフに達したらメッセージを表示
-            if (chapter === 4) {
-                // 4章が終了したら /Home にリダイレクト
-                router.push("/Ending");
-            } else {
-                setChapter(chapter + 1);
-            }
+            handleChapterCompletion();
         }
     };
 
-    const handleChoice = async(choice) => {
+    const handleChoice = async (choice) => {
         console.log("選択肢:", choice.content);
-        console.log("送信するデータ:", JSON.stringify({ choice: choice.id, chapter: chapter }));
         const nextProgress = choice.start;
         setProgress(nextProgress);
 
         const nextSentence = chapterData[nextProgress];
-        setDisplay(nextSentence.sentence); // 選択肢に基づいたセリフを表示
-        setPeople(nextSentence.people); // 話者を設定
-        setChoices([]); // 選択肢をクリア
-
-        // 選択肢の範囲（end）を設定
+        setDisplay(nextSentence.sentence);
+        setPeopleName(nextSentence.people);
+        setChoices([]);
         setChoiceEnd(choice.end);
 
         try {
@@ -157,6 +121,15 @@ function Story() {
             console.log("選択が保存されました");
         } catch (error) {
             console.error("選択肢の保存でエラーが発生しました:", error);
+        }
+    };
+
+    const handleChapterCompletion = () => {
+        if (chapter === 4) {
+            router.push("/Ending");
+        } else {
+            const nextChapter = chapter + 1;
+            router.push(`/Start?unlockedChapter=chapter_${nextChapter}`);
         }
     };
 
@@ -181,3 +154,4 @@ function Story() {
 }
 
 export default Story;
+

@@ -1,0 +1,65 @@
+/* styles/start.css */
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #000000;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.unlocked {
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #0070f3;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.unlocked:hover {
+    background-color: #005bb5;
+}
+
+.locked {
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    color: #666;
+    background-color: #ccc;
+    border: none;
+    border-radius: 8px;
+    cursor: not-allowed;
+}
+
+.backButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #ddd;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.backButton:hover {
+    background-color: #bbb;
+}
+
