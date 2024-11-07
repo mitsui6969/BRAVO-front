@@ -21,19 +21,30 @@ body {
     background-color: aqua;
 }
 
+.choices-area {
+    
+}
+
 .display-area {
     position: relative;
     top: 0;
     height: 35%;
     width: 100%;
+    font-family: 'YuMincho';
+    color: #ffff;
     margin: 0;
     padding: 0;
     background: linear-gradient(rgba(18, 18, 18, 0.798), 70%, rgba(255, 192, 203, 0));
 }
 
+.chara-name {
+    height: 6vh;
+    width: 90%;
+    margin: 0 auto;
+    background-color: antiquewhite;
+}
+
 .display-moji {
     width: 90%;
     margin: 0 auto;
-    font-family: 'YuMincho';
-    color: #ffff;
 }
