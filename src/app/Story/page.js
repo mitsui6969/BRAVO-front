@@ -1,12 +1,10 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 function Story() {
     const router = useRouter();
-    const searchParams = useSearchParams();
 
     const [progress, setProgress] = useState(0); // ストーリーの進行
     const [display, setDisplay] = useState(''); // 表示する台詞
