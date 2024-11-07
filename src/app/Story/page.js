@@ -160,7 +160,7 @@ function Story() {
 
             <div className='display-area'>
                 <h3>{people}</h3>
-                <p>{display}</p>
+                <p className='display-moji'>{display}</p>
                 {choices.length === 0 ? (
                     <button onClick={handleNextSentence}>次へ</button>
                 ) : (

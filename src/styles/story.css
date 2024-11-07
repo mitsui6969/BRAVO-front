@@ -9,19 +9,31 @@ body {
     height: 90%;
     width: 80%;
     margin: 0 auto;
-    background-color: antiquewhite;
+    background-color: rgb(255, 255, 255);
     
 }
 
 .charaPic {
     position: relative;
     height: 60%;
+    padding: 0;
+    margin: 0;
     background-color: aqua;
 }
 
 .display-area {
     position: relative;
     top: 0;
-    height: 40%;
-    background-color: rgba(37, 37, 38, 0.387);
+    height: 35%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(rgba(18, 18, 18, 0.798), 70%, rgba(255, 192, 203, 0));
+}
+
+.display-moji {
+    width: 90%;
+    margin: 0 auto;
+    font-family: 'YuMincho';
+    color: #ffff;
 }
