@@ -5,6 +5,8 @@ body {
     width: 100%;
     background-image: url("/title.png");
     background-size: 100% 100%;
+    font-family: Arial, sans-serif; /* デフォルトフォント */
+    color: #ffffff; /* 全体のテキストカラー */
 }
 
 .container {
@@ -58,10 +60,35 @@ body {
     font-size: 1rem;
 }
 
-/* 全体のフォントと色調整 */
-body {
-    font-family: Arial, sans-serif; /* デフォルトフォント */
-    color: #ffffff; /* 全体のテキストカラー */
+.reset-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px 0;
+    width: 70vw;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    background-color: rgba(39, 39, 39, 0.799);
+    border-radius: 13px;
 }
 
+.reset-font {
+    padding: 0;
+    margin: 10px;
+}
 
+.reset-modal-buttons {
+    margin-top: 20px;
+}
+
+.return-bun {
+    padding: 20px 40px;
+    margin: 0 5px;
+}
+
+.reset-true-Butotn {
+    padding: 20px 40px;
+    margin: 0 5px;
+}

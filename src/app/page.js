@@ -50,11 +50,13 @@ function Home()  {
 
                     <Button className='reset-button button-outline' onClick={() => setIsModalOpen(true)}>リセット</Button>
                 </div>
-                <Modal isOpen={isModalOpen}>
-                    <h1>本当にリセットしますか？</h1>
-                    <p>リセットすると今までのデータは全て削除されます。</p>
-                    <button onClick={() => setIsModalOpen(false)}>戻る</button>
-                    <button className='reset-true-Butotn' onClick={handleDeleteData}>リセット</button>
+                <Modal className='reset-modal' isOpen={isModalOpen}>
+                    <h1 className='reset-font'>本当にリセットしますか？</h1>
+                    <p className='reset-font'>リセットすると今までのデータは全て削除されます。</p>
+                    <div className='reset-modal-buttons'>
+                        <Button className='return-bun' onClick={() => setIsModalOpen(false)}>戻る</Button>
+                        <Button className='reset-true-Butotn button-outline' onClick={handleDeleteData}>リセット</Button>
+                    </div>
                 </Modal>
             </div>
         </div>   
