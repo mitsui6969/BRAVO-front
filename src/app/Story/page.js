@@ -14,7 +14,7 @@ function StoryContent() {
     const [display, setDisplay] = useState(''); // 表示する台詞
     const [people, setPeople] = useState(null); // 話者のキャラクター
     const [peoplePic, setPeoplePic] = useState(''); // 表示する立ち絵
-    const [chapter, setChapter] = useState(1); // 現在の章
+    const [chapter, setChapter] = useState(chapterParam || 1); // 現在の章
     const [chapterData, setChapterData] = useState(null); // 章のデータ
     const [choices, setChoices] = useState([]); // 選択肢のデータ
     const [choiceEnd, setChoiceEnd] = useState(null); // 選択肢の終わりのインデックス
@@ -42,10 +42,11 @@ function StoryContent() {
     }, []); // 空の依存配列でfetchStoryをメモ化
 
     useEffect(() => {
-        const initialChapter = chapterParam ? parseInt(chapterParam, 10) : 1;
-        setChapter(initialChapter);
-        fetchStory(initialChapter); // 依存関係にfetchStoryを追加
-    }, [chapterParam, fetchStory]);
+        fetchStory()
+        // const initialChapter = chapterParam ? parseInt(chapterParam, 10) : 1;
+        // setChapter(initialChapter);
+        // fetchStory(initialChapter); // 依存関係にfetchStoryを追加
+    }, [chapter]);
 
     const setSpeaker = (speakerId) => {
         switch (speakerId) {
@@ -88,37 +89,37 @@ function StoryContent() {
         }
     };
 
-    const setPeopleName = (peopleCode) => {
-        switch (peopleCode) {
-            case 0:
-                setPeople("");
-                break;
-            case 1:
-                setPeople("??");
-                break;
-            case 2:
-                setPeople("グレンツェ");
-                break;
-            case 3:
-                setPeople("ピーゲル");
-                break;
-            case 4:
-                setPeople("トルテ");
-                break;
-            case 5:
-                setPeople("欲望の王");
-                break;
-            case 6:
-                setPeople("氷の女王");
-                break;
-            case 7:
-                setPeople("トロイ");
-                break;
-            default:
-                setPeople("");
-                break;
-        }
-    };
+    // const setPeopleName = (peopleCode) => {
+    //     switch (peopleCode) {
+    //         case 0:
+    //             setPeople("");
+    //             break;
+    //         case 1:
+    //             setPeople("??");
+    //             break;
+    //         case 2:
+    //             setPeople("グレンツェ");
+    //             break;
+    //         case 3:
+    //             setPeople("ピーゲル");
+    //             break;
+    //         case 4:
+    //             setPeople("トルテ");
+    //             break;
+    //         case 5:
+    //             setPeople("欲望の王");
+    //             break;
+    //         case 6:
+    //             setPeople("氷の女王");
+    //             break;
+    //         case 7:
+    //             setPeople("トロイ");
+    //             break;
+    //         default:
+    //             setPeople("");
+    //             break;
+    //     }
+    // };
 
     const handleNextSentence = () => {
         if (chapterData && progress < chapterData.length - 1) {
@@ -194,18 +195,12 @@ function StoryContent() {
 
     return (
 
-        <div className='StoryPage'>
+        <div className='StoryPage' onClick={handleNextSentence}>
             <div className='charaPic'>
                 {peoplePic && <Image src={peoplePic} height={100} width={100} alt={`${people}の立ち絵`} />}
-            </div>
-
-            <div className='display-area'>
-                <h3>{people}</h3>
-                <p className='display-moji'>{display}</p>
-                {choices.length === 0 ? (
-                    <button onClick={handleNextSentence}>次へ</button>
-                ) : (
-                    <div>
+            
+            {choices.length !== 0 && 
+                    <div className='choices-area'>
                         <h2>選択肢</h2>
                         {choices.map((choice) => (
                             <button key={choice.id} onClick={() => handleChoice(choice)}>
@@ -213,7 +208,12 @@ function StoryContent() {
                             </button>
                         ))}
                     </div>
-                )}
+            }
+        </div>
+
+            <div className='display-area'>
+                <h3 className='chara-name'>{people}</h3>
+                <p className='display-moji'>{display}</p>
             </div>
 
         </div>
