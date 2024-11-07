@@ -1,0 +1,27 @@
+body {
+    background-image: url(/backImages/chapter1.png);
+    height: 100%;
+    width: 100vw;
+}
+
+.StoryPage {
+    position: absolute;
+    height: 90%;
+    width: 80%;
+    margin: 0 auto;
+    background-color: antiquewhite;
+    
+}
+
+.charaPic {
+    position: relative;
+    height: 60%;
+    background-color: aqua;
+}
+
+.display-area {
+    position: relative;
+    top: 0;
+    height: 40%;
+    background-color: rgba(37, 37, 38, 0.387);
+}

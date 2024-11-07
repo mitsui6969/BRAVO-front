@@ -4,6 +4,7 @@ import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import '/src/styles/story.css'
 
 function Story() {
     const router = useRouter();
@@ -152,24 +153,27 @@ function Story() {
     }
 
     return (
-        <div>
-            <h1>Story</h1>
-            {isLoading ? <p>Loading...</p> : <p>Loaded!</p>}
+        <div className='StoryPage'>
+            <div className='charaPic'>
+                {peoplePic && <Image src={peoplePic} height={100} width={100} alt={`${people}の立ち絵`} />}
+            </div>
 
-            {peoplePic && <Image src={peoplePic} height={100} width={100} alt={`${people}の立ち絵`} />}
-            <p><strong>話者 {people}:</strong> {display}</p>
-            {choices.length === 0 ? (
-                <button onClick={handleNextSentence}>次へ</button>
-            ) : (
-                <div>
-                    <h2>選択肢</h2>
-                    {choices.map((choice) => (
-                        <button key={choice.id} onClick={() => handleChoice(choice)}>
-                            {choice.content}
-                        </button>
-                    ))}
-                </div>
-            )}
+            <div className='display-area'>
+                <h3>{people}</h3>
+                <p>{display}</p>
+                {choices.length === 0 ? (
+                    <button onClick={handleNextSentence}>次へ</button>
+                ) : (
+                    <div>
+                        <h2>選択肢</h2>
+                        {choices.map((choice) => (
+                            <button key={choice.id} onClick={() => handleChoice(choice)}>
+                                {choice.content}
+                            </button>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
