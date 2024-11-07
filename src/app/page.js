@@ -4,6 +4,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import Modal from 'react-modal';
 import '../styles/home.css'; 
+import Button from '@/components/Button/Button';
 
 Modal.setAppElement("body");
 
@@ -41,16 +42,21 @@ function Home()  {
         <div className="container">
             <div className="titleContainer">
                 <h1 className="title">グレンツェの旅</h1>
-                <Link href={'/Start'}>
-                    <button className="startButton">スタート</button>
-                </Link>
 
-                <button className='resetButotn' onClick={() => setIsModalOpen(true)}>リセット</button>
-                <Modal isOpen={isModalOpen}>
-                    <h1>本当にリセットしますか？</h1>
-                    <p>リセットすると今までのデータは全て削除されます。</p>
-                    <button onClick={() => setIsModalOpen(false)}>戻る</button>
-                    <button className='resetButotn' onClick={handleDeleteData}>リセット</button>
+                <div className='home-button-component'>
+                    <Link href={'/Start'}>
+                        <Button className='start-button'>スタート</Button>
+                    </Link>
+
+                    <Button className='reset-button button-outline' onClick={() => setIsModalOpen(true)}>リセット</Button>
+                </div>
+                <Modal className='reset-modal' isOpen={isModalOpen}>
+                    <h1 className='reset-font'>本当にリセットしますか？</h1>
+                    <p className='reset-font'>リセットすると今までのデータは全て削除されます。</p>
+                    <div className='reset-modal-buttons'>
+                        <Button className='return-bun' onClick={() => setIsModalOpen(false)}>戻る</Button>
+                        <Button className='reset-true-Butotn button-outline' onClick={handleDeleteData}>リセット</Button>
+                    </div>
                 </Modal>
             </div>
         </div>   

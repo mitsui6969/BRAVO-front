@@ -1,15 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap'); 
 
+/* body {
+    height: 100%;
+    width: 100%;
+    background-image: url("/title.png");
+    background-size: 100% 100%;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+} */
+
 .container {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-image: url("/title.png"); /* publicフォルダ内の背景画像 */
+    max-height: 100%;
     background-size: cover;
     background-position: center;
     color: #fff;
     flex-direction: column;
+    margin: 0;
 }
 
 .titleContainer {
@@ -34,28 +43,53 @@
     text-transform: uppercase;
 }
 
-/* スタートボタンのスタイル */
-.startButton {
-    padding: 15px 40px;
+.start-button {
     font-size: 1.5rem;
-    color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.8);
-    border: 2px solid #ffffff; 
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 15px 40px;
 }
 
-.startButton:hover {
-    background-color: #333333;
-    transform: scale(1.05); /* ホバー時に少し大きく */
+.home-button-component {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
 }
 
-/* 全体のフォントと色調整 */
-body {
-    font-family: Arial, sans-serif; /* デフォルトフォント */
-    color: #ffffff; /* 全体のテキストカラー */
+.reset-button {
+    margin: 20px 0;
+    width: 30%;
+    padding: 15px 30px;
+    font-size: 1rem;
 }
 
+.reset-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px 0;
+    width: 70vw;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    background-color: rgba(39, 39, 39, 0.799);
+    border-radius: 13px;
+}
 
+.reset-font {
+    padding: 0;
+    margin: 10px;
+}
+
+.reset-modal-buttons {
+    margin-top: 20px;
+}
+
+.return-bun {
+    padding: 20px 40px;
+    margin: 0 5px;
+}
+
+.reset-true-Butotn {
+    padding: 20px 40px;
+    margin: 0 5px;
+}

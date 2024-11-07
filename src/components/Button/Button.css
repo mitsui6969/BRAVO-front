@@ -1,0 +1,56 @@
+/* 基礎スタイル */
+.button-base {
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 2px solid #ffffff; 
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.button-base:hover {
+    background-color: #333333;
+    transform: scale(1.05); /* ホバー時に少し大きく */
+}
+
+  /* 無効状態 */
+.button-base:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+  /* バリエーション: primary */
+.button-primary {
+    background-color: var(--accent);
+    color: var(--primaryWhite);
+}
+
+.button-primary:hover:not(:disabled) {
+    opacity: 0.75;
+}
+
+  /* バリエーション: outline */
+.button-outline {
+    background-color: #ffffffd5;
+    color: rgba(0, 0, 0, 0.877);
+    border: none;
+}
+
+.button-outline:hover {
+    background-color: #ffffffd5;
+    color: #333333c1;
+    transform: scale(1.05);
+}
+
+  /* バリエーション: icon */
+.button-icon {
+    background-color: transparent;
+    padding: 0.5rem;
+    height: auto;
+}
+
+.button-icon:hover:not(:disabled) {
+    background-color: var(--bg-gray);
+    border-radius: 9999px;
+}

@@ -1,6 +1,7 @@
 // 全画面共通のレイアウト
 import Link from "next/link"
 import { Suspense } from "react"
+import '../styles/global.css'
 
 export const metadata = {
   title: 'Next.js',
@@ -12,13 +13,13 @@ export default function RootLayout({ children }) {
     <html lang="jp">
       <body>
         <Suspense>
-        <div className="header">
+        {/* <div className="header">
           <Link href={"/"}>/Home</Link>
           <Link href={"/Start"}>/Start</Link>
           <Link href={"/Develop"}>/Develop</Link>
           <Link href={"/Story"}>/Story</Link>
           <Link href={"/Ending"}>/Ending</Link>
-        </div>
+        </div> */}
 
         <div>{children}</div>
         </Suspense>
