@@ -4,6 +4,7 @@ import React from 'react'
 import axios from 'axios';
 
 function Ending() {
+    const [endData, setEndData] = useState(null);
     const [endTitle, setEndTitle] = useState('title');
     const [end, setEnd] = useState('content');
 
@@ -13,11 +14,18 @@ function Ending() {
     
     const fetchEnding = async () => {
         try {
-            const res = await axios.get('http://127.0.0.1:5000/story/3');
-            setChapterData(res.data);
-            if (res.data.length > 0) {
-                setEndTitle(res.data[0].title); // エンドタイトルを設定
-                setEnd(res.data[0].content); // 詳細を設定
+            const res = await axios.get('http://127.0.0.1:5000/end');
+            setEndData(res.data);
+            console.log("受け取ったデータ:", res.data);
+
+            const jsonData = res.data.json_file;
+            const endId = res.data.end_id;
+
+            if (jsonData && jsonData[endId]) {
+                setEndTitle(jsonData[endId].title); // エンドタイトルを設定
+                setEnd(jsonData[endId].content); // 詳細を設定
+            } else {
+                console.log("データが正しくありません:", res.data);
             }
         } catch (error) {
             console.error("axiosのエラーが発生しました:", error);

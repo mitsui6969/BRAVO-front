@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Modal from 'react-modal';
 import '../styles/home.css'; 
 
-Modal.setAppElement("html");
+Modal.setAppElement("body");
 
 function Home()  {
     const [choiceData, setChoiceData] = useState(null);
