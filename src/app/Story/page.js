@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 function Story() {
     const router = useRouter();
-    
+
     const [progress, setProgress] = useState(0); // ストーリーの進行
     const [display, setDisplay] = useState(''); // 表示する台詞
     const [people, setPeople] = useState(null); // 話者のキャラクター
@@ -50,7 +50,7 @@ function Story() {
                 break;
             case 1:
                 setPeople("??");
-                setPeoplePic("/character/unknown.png");
+                setPeoplePic("");
                 break;
             case 2:
                 setPeople("グレンツェ");
@@ -58,23 +58,23 @@ function Story() {
                 break;
             case 3:
                 setPeople("ピーゲル");
-                setPeoplePic("/character/unknown.png");
+                setPeoplePic("/character/piegel.png");
                 break;
             case 4:
                 setPeople("トルテ");
-                setPeoplePic("/character/unknown.png");
+                setPeoplePic("/character/torte.png");
                 break;
             case 5:
                 setPeople("欲望の王");
-                setPeoplePic("/character/unknown.png");
+                setPeoplePic("/character/king_desire.png");
                 break;
             case 6:
                 setPeople("氷の女王");
-                setPeoplePic("/character/unknown.png");
+                setPeoplePic("/character/Queen_ice.png");
                 break;
             case 7:
                 setPeople("トロイ");
-                setPeoplePic("/character/unknown.png");
+                setPeoplePic("/character/troy.png");
                 break;
             default:
                 setPeople("");
