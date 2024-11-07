@@ -13,8 +13,11 @@ const ChapterSelection = () => {
     const fetchData = async () => {
         try {
             const res = await axios.get('http://127.0.0.1:5000/home');
-            const data = res.data;
-            // 必要に応じてchoiceDataなどのセットが必要であればここで行います
+            const datas = res.data;
+            if (datas) {
+                setUnlockedChapter(datas.length+1)
+            }
+            
         } catch (error) {
             console.error("データの取得でエラーが発生しました:", error);
         }
@@ -22,24 +25,13 @@ const ChapterSelection = () => {
 
     // ページが読み込まれる際にlocalStorageから進行状況を取得
     useEffect(() => {
-        const savedChapter = parseInt(localStorage.getItem('unlockedChapter') || '1', 10);
-        setUnlockedChapter(savedChapter); // 最大アンロック章の設定
-        fetchData(); // データ取得関数の呼び出し
-    }, []);
+        fetchData();
+    }, [unlockedChapter]);
 
-    // 章のクリア時にlocalStorageを更新
-    const markChapterAsCleared = (chapter) => {
-        const newUnlockedChapter = Math.max(chapter + 1, unlockedChapter);
-        setUnlockedChapter(newUnlockedChapter);
-        localStorage.setItem('unlockedChapter', newUnlockedChapter);
-    };
 
     const handleChapterClick = async (targetChapter) => {
         if (targetChapter <= unlockedChapter || targetChapter === 1) { // 第1章は常にクリック可能
             try {
-                // 前の章をクリア済みとして更新
-                markChapterAsCleared(targetChapter);
-                
                 // ストーリーページに遷移
                 router.push(`/Story?chapter=${targetChapter}`);
                 
