@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 function Story() {
@@ -14,17 +13,21 @@ function Story() {
     const [chapterData, setChapterData] = useState(null); // 章のデータ
     const [choices, setChoices] = useState([]); // 選択肢のデータ
     const [choiceEnd, setChoiceEnd] = useState(null); // 選択肢の終わりのインデックス
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         fetchStory();
     }, [chapter]);
 
     const fetchStory = async () => {
+        setIsLoading(true)
         try {
             const res = await axios.get(`http://127.0.0.1:5000/story/${chapter}`);
+            console.log("データ受け取り完了:", res.data)
             setChapterData(res.data); // データ全体を保存
             setProgress(0); // 進捗をリセット
             setChoiceEnd(null); // 選択肢の範囲をリセット
+
             if (res.data.length > 0) {
                 setDisplay(res.data[0].sentence); // 最初のセリフを表示
 
@@ -59,6 +62,8 @@ function Story() {
             }
         } catch (error) {
             console.error("axiosのエラーが発生しました:", error);
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -163,6 +168,7 @@ function Story() {
     return (
         <div>
             <h1>Story</h1>
+            {isLoading ? <p>loading...</p> : <p>loaded!</p>}
             <p><strong>話者 {people}:</strong> {display}</p>
             {choices.length === 0 ? (
                 <button onClick={handleNextSentence}>次へ</button>
