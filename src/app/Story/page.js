@@ -1,14 +1,15 @@
-"use client"
-
-import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+"use client";
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import '/src/styles/story.css'
 
-function Story() {
-    const router = useRouter();
 
+function StoryContent() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const chapterParam = searchParams.get('chapter'); // クエリから現在の章を取得
     const [progress, setProgress] = useState(0); // ストーリーの進行
     const [display, setDisplay] = useState(''); // 表示する台詞
     const [people, setPeople] = useState(null); // 話者のキャラクター
@@ -19,14 +20,11 @@ function Story() {
     const [choiceEnd, setChoiceEnd] = useState(null); // 選択肢の終わりのインデックス
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        fetchStory();
-    }, [chapter]);
-
-    const fetchStory = async () => {
+    // fetchStoryをuseCallbackでメモ化
+    const fetchStory = useCallback(async (currentChapter) => {
         setIsLoading(true);
         try {
-            const res = await axios.get(`http://127.0.0.1:5000/story/${chapter}`);
+            const res = await axios.get(`http://127.0.0.1:5000/story/${currentChapter}`);
             console.log("データ受け取り完了:", res.data);
             setChapterData(res.data); // データ全体を保存
             setProgress(0); // 進捗をリセット
@@ -41,7 +39,13 @@ function Story() {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, []); // 空の依存配列でfetchStoryをメモ化
+
+    useEffect(() => {
+        const initialChapter = chapterParam ? parseInt(chapterParam, 10) : 1;
+        setChapter(initialChapter);
+        fetchStory(initialChapter); // 依存関係にfetchStoryを追加
+    }, [chapterParam, fetchStory]);
 
     const setSpeaker = (speakerId) => {
         switch (speakerId) {
@@ -84,9 +88,42 @@ function Story() {
         }
     };
 
+    const setPeopleName = (peopleCode) => {
+        switch (peopleCode) {
+            case 0:
+                setPeople("");
+                break;
+            case 1:
+                setPeople("??");
+                break;
+            case 2:
+                setPeople("グレンツェ");
+                break;
+            case 3:
+                setPeople("ピーゲル");
+                break;
+            case 4:
+                setPeople("トルテ");
+                break;
+            case 5:
+                setPeople("欲望の王");
+                break;
+            case 6:
+                setPeople("氷の女王");
+                break;
+            case 7:
+                setPeople("トロイ");
+                break;
+            default:
+                setPeople("");
+                break;
+        }
+    };
+
     const handleNextSentence = () => {
         if (chapterData && progress < chapterData.length - 1) {
             const nextProgress = progress + 1;
+
             if (choiceEnd !== null && nextProgress > choiceEnd) {
                 console.log("選択肢の終わりに達しました");
                 if (chapter === 4) {
@@ -99,8 +136,6 @@ function Story() {
 
             setProgress(nextProgress);
             const nextSentence = chapterData[nextProgress];
-            // setDisplay(nextSentence.sentence || '');
-            // setChoices(nextSentence.state && Array.isArray(nextSentence.sentence) ? nextSentence.sentence : []);
 
             if (nextSentence.state && Array.isArray(nextSentence.sentence)) {
                 setChoices(nextSentence.sentence); // 選択肢を設定
@@ -109,7 +144,6 @@ function Story() {
                 setDisplay(nextSentence.sentence); // 通常のセリフを表示
                 setChoices([]); // 選択肢をクリア
             }
-
             setSpeaker(nextSentence.people); // 次の話者に応じて立ち絵を更新
         } else if (chapterData) {
             console.log("最後のセリフです");
@@ -121,38 +155,45 @@ function Story() {
         }
     };
 
-    const handleChoice = async(choice) => {
-        console.log("選択肢:", choice.content);
-        console.log("送信するデータ:", JSON.stringify({ choice: choice.id, chapter: chapter }));
+    const handleChoice = async (choice) => {
         const nextProgress = choice.start;
         setProgress(nextProgress);
 
         const nextSentence = chapterData[nextProgress];
-        setDisplay(nextSentence.sentence); // 選択肢に基づいたセリフを表示
-        setPeople(nextSentence.people); // 話者を設定
-        setChoices([]); // 選択肢をクリア
-
-        // 選択肢の範囲（end）を設定
+        setDisplay(nextSentence.sentence);
+        setPeopleName(nextSentence.people);
+        setChoices([]);
         setChoiceEnd(choice.end);
 
         try {
-            const res = await fetch('http://127.0.0.1:5000/story/save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ choice: choice.id, chapter: chapter }),
+            await axios.post('http://127.0.0.1:5000/story/save', {
+                choice: choice.id,
+                chapter: chapter,
             });
-            if (!res.ok) {
-                throw new Error("Failed to save choice data");
-            }
             console.log("選択が保存されました");
         } catch (error) {
             console.error("選択肢の保存でエラーが発生しました:", error);
         }
-    }
+    };
+
+    const handleChapterCompletion = () => {
+        if (chapter === 4) {
+            router.push("/Ending");
+        } else {
+            const nextChapter = chapter + 1;
+
+            const maxUnlockedChapter = Math.max(
+                nextChapter,
+                parseInt(localStorage.getItem('unlockedChapter') || '1', 10)
+            );
+            localStorage.setItem('unlockedChapter', maxUnlockedChapter);
+
+            router.push(`/Start?chapter=${nextChapter}`);
+        }
+    };
 
     return (
+
         <div className='StoryPage'>
             <div className='charaPic'>
                 {peoplePic && <Image src={peoplePic} height={100} width={100} alt={`${people}の立ち絵`} />}
@@ -174,8 +215,16 @@ function Story() {
                     </div>
                 )}
             </div>
+
         </div>
     );
 }
 
-export default Story;
+export default function Story() {
+    return (
+        <Suspense fallback={<p>Loading story...</p>}>
+            <StoryContent />
+        </Suspense>
+    );
+}
+
