@@ -1,48 +1,41 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Link from 'next/link';
+import Modal from 'react-modal';
 import '../styles/home.css'; 
 
-function Develop()  {
-    const [showItems, setShowItems] = useState(false); 
-    const [items, setItems] = useState([]);
-    const [newItem, setNewItem] = useState('');
+Modal.setAppElement("html");
+
+function Home()  {
+    const [choiceData, setChoiceData] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     useEffect(() => {
-        if (showItems) {
-            fetchItems();
+        if (choiceData) {
+            fetchData();
         }
-    }, [showItems]);
+    }, [choiceData]);
 
-    const fetchItems = async () => {
-        const res = await fetch('http://127.0.0.1:5000/items');
+    // データ取得
+    const fetchData = async () => {
+        const res = await axios.get('http://127.0.0.1:5000/home');
         const data = await res.json();
-        setItems(data);
+        setChoiceData(data);
     };
 
-    const addItem = async () => {
-        if (!newItem) return;
-        const res = await fetch('http://127.0.0.1:5000/items', {
+    // データ削除
+    const handleDeleteData = async () => {
+        await axios.post('http://127.0.0.1:5000/home/reset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name: newItem }),
         });
-        fetchItems();
-        setNewItem('');
-    };
-
-    const deleteItem = async (itemId) => {
-        await fetch('http://127.0.0.1:5000/deleteItem', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ item_id: itemId }),
-        });
-        setItems(items.filter(item => item.id !== itemId));
+        setChoiceData(null);
+        setIsModalOpen(false);
     };
 
     return (
@@ -52,9 +45,17 @@ function Develop()  {
                 <Link href={'/Start'}>
                     <button className="startButton">スタート</button>
                 </Link>
+
+                <button className='resetButotn' onClick={() => setIsModalOpen(true)}>リセット</button>
+                <Modal isOpen={isModalOpen}>
+                    <h1>本当にリセットしますか？</h1>
+                    <p>リセットすると今までのデータは全て削除されます。</p>
+                    <button onClick={() => setIsModalOpen(false)}>戻る</button>
+                    <button className='resetButotn' onClick={handleDeleteData}>リセット</button>
+                </Modal>
             </div>
         </div>   
     );
 }
 
-export default Develop;
+export default Home;
