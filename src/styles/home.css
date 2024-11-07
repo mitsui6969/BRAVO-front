@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap'); 
+
 .container {
     display: flex;
     align-items: center;
@@ -12,27 +14,48 @@
 
 .titleContainer {
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.5); /* 背景が見やすくなるように半透明の背景を追加 */
-    padding: 20px;
-    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.6); 
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-
+/* タイトルのスタイル */
 .title {
+    font-family: 'Cinzel', serif;
     font-size: 4rem;
-    font-weight: bold;
+    color: #ffffff;
     margin-bottom: 20px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(135, 131, 131, 0.8), 0 0 10px rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #ffffff, #f5e0c3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
 }
 
+/* スタートボタンのスタイル */
 .startButton {
-    padding: 12px 30px;
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: #0070f3;
-    border: none;
-    border-radius: 8px;
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 2px solid #ffffff; 
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.startButton:hover {
+    background-color: #333333;
+    transform: scale(1.05); /* ホバー時に少し大きく */
+}
+
+/* 全体のフォントと色調整 */
+body {
+    font-family: Arial, sans-serif; /* デフォルトフォント */
+    color: #ffffff; /* 全体のテキストカラー */
 }
 
 

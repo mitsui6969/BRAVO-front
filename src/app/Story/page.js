@@ -1,13 +1,12 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 function Story() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const unlockedChapterParam = searchParams.get('unlockedChapter');
+    const chapterParam = searchParams.get('chapter'); // クエリから現在の章を取得
     const [progress, setProgress] = useState(0); // ストーリーの進行
     const [display, setDisplay] = useState(''); // 表示する台詞
     const [people, setPeople] = useState(null); // 話者のキャラクター
@@ -17,12 +16,10 @@ function Story() {
     const [choiceEnd, setChoiceEnd] = useState(null); // 選択肢の終わりのインデックス
 
     useEffect(() => {
-        const initialChapter = unlockedChapterParam
-            ? parseInt(unlockedChapterParam.replace('chapter_', ''), 10)
-            : 1;
+        const initialChapter = chapterParam ? parseInt(chapterParam, 10) : 1;
         setChapter(initialChapter);
         fetchStory(initialChapter); // 初期章に基づいてストーリーデータを取得
-    }, [unlockedChapterParam]);
+    }, [chapterParam]);
 
     const fetchStory = async (currentChapter) => {
         try {
@@ -97,7 +94,6 @@ function Story() {
     };
 
     const handleChoice = async (choice) => {
-        console.log("選択肢:", choice.content);
         const nextProgress = choice.start;
         setProgress(nextProgress);
 
@@ -108,16 +104,10 @@ function Story() {
         setChoiceEnd(choice.end);
 
         try {
-            const res = await fetch('http://127.0.0.1:5000/story/save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ choice: choice.id, chapter: chapter }),
+            await axios.post('http://127.0.0.1:5000/story/save', {
+                choice: choice.id,
+                chapter: chapter,
             });
-            if (!res.ok) {
-                throw new Error("Failed to save choice data");
-            }
             console.log("選択が保存されました");
         } catch (error) {
             console.error("選択肢の保存でエラーが発生しました:", error);
@@ -129,7 +119,16 @@ function Story() {
             router.push("/Ending");
         } else {
             const nextChapter = chapter + 1;
-            router.push(`/Start?unlockedChapter=chapter_${nextChapter}`);
+
+            // 現在の章をクリア済みとして保存
+            const maxUnlockedChapter = Math.max(
+                nextChapter,
+                parseInt(localStorage.getItem('unlockedChapter') || '1', 10)
+            );
+            localStorage.setItem('unlockedChapter', maxUnlockedChapter);
+
+            // Startページに遷移
+            router.push(`/Start?chapter=${nextChapter}`);
         }
     };
 
@@ -154,4 +153,3 @@ function Story() {
 }
 
 export default Story;
-

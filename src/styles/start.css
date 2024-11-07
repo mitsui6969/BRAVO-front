@@ -1,65 +1,71 @@
 /* styles/start.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
 .container {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #000000;
+    background-size: cover;
+    background-position: center;
     font-family: Arial, sans-serif;
 }
 
-h2 {
-    font-size: 1.5rem;
-    color: #ffffff;
-    margin-bottom: 20px;
-}
 
 .buttonContainer {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-bottom: 30px;
 }
 
+/* アンロックされたボタンのスタイル */
 .unlocked {
-    padding: 12px 30px;
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: #0070f3;
-    border: none;
-    border-radius: 8px;
+    padding: 20px 50px; /* ボタンをさらに大きく */
+    font-size: 1.7rem; /* ボタンの文字も大きく */
+    color: #ffffff;
+    background-color: rgba(14, 0, 26, 0.662); /* 半透明で背景になじむ色合い */
+    border: 2px solid #ffffff;
+    border-radius: 15px; /* 角を少し丸めて柔らかい印象に */
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s;
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.4); /* 立体感を強調する影 */
 }
 
 .unlocked:hover {
-    background-color: #005bb5;
+    background-color: rgba(0, 88, 159, 0.767);
+    transform: scale(1.1); /* ホバー時に少し大きく */
 }
 
+/* ロックされたボタンのスタイル */
 .locked {
-    padding: 12px 30px;
-    font-size: 1.2rem;
-    color: #666;
-    background-color: #ccc;
-    border: none;
-    border-radius: 8px;
+    padding: 20px 50px;
+    font-size: 1.7rem;
+    color: #999;
+    background-color: rgba(200, 200, 200, 0.8);
+    border: 2px solid #666;
+    border-radius: 15px;
     cursor: not-allowed;
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* 戻るボタンのスタイル */
 .backButton {
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #333;
-    background-color: #ddd;
-    border: none;
-    border-radius: 8px;
+    padding: 15px 40px;
+    font-size: 1.3rem;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid #ffffff;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s;
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.4);
 }
 
 .backButton:hover {
-    background-color: #bbb;
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
 }
 
