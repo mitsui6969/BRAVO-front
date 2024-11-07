@@ -1,7 +1,5 @@
 /* 基礎スタイル */
 .button-base {
-    padding: 15px 40px;
-    font-size: 1.5rem;
     color: #ffffff;
     background-color: rgba(0, 0, 0, 0.8);
     border: 2px solid #ffffff; 
@@ -34,13 +32,15 @@
 
   /* バリエーション: outline */
 .button-outline {
-    background-color: var(--white);
-    color: var(--accent);
-    border: 1px solid var(--accent);
+    background-color: #ffffffd5;
+    color: rgba(0, 0, 0, 0.877);
+    border: none;
 }
 
-.button-outline:hover:not(:disabled) {
-    opacity: 0.75;
+.button-outline:hover {
+    background-color: #ffffffd5;
+    color: #333333c1;
+    transform: scale(1.05);
 }
 
   /* バリエーション: icon */

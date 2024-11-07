@@ -12,13 +12,13 @@ export default function RootLayout({ children }) {
     <html lang="jp">
       <body>
         <Suspense>
-        <div className="header">
+        {/* <div className="header">
           <Link href={"/"}>/Home</Link>
           <Link href={"/Start"}>/Start</Link>
           <Link href={"/Develop"}>/Develop</Link>
           <Link href={"/Story"}>/Story</Link>
           <Link href={"/Ending"}>/Ending</Link>
-        </div>
+        </div> */}
 
         <div>{children}</div>
         </Suspense>

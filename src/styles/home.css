@@ -1,11 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap'); 
 
+body {
+    height: 100%;
+    width: 100%;
+    background-image: url("/title.png");
+    background-size: 100% 100%;
+}
+
 .container {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-image: url("/title.png"); /* publicフォルダ内の背景画像 */
     background-size: cover;
     background-position: center;
     color: #fff;
@@ -34,22 +40,22 @@
     text-transform: uppercase;
 }
 
-/* スタートボタンのスタイル */
-.startButton {
-    padding: 15px 40px;
+.start-button {
     font-size: 1.5rem;
-    color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.8);
-    border: 2px solid #ffffff; 
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 15px 40px;
 }
 
-.startButton:hover {
-    background-color: #333333;
-    transform: scale(1.05); /* ホバー時に少し大きく */
+.home-button-component {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.reset-button {
+    margin: 20px 0;
+    width: 30%;
+    padding: 15px 30px;
+    font-size: 1rem;
 }
 
 /* 全体のフォントと色調整 */
