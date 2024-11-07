@@ -1,6 +1,7 @@
 // 全画面共通のレイアウト
 import Link from "next/link"
 import { Suspense } from "react"
+import '../styles/global.css'
 
 export const metadata = {
   title: 'Next.js',

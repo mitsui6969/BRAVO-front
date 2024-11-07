@@ -1,23 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap'); 
 
-body {
+/* body {
     height: 100%;
     width: 100%;
     background-image: url("/title.png");
     background-size: 100% 100%;
-    font-family: Arial, sans-serif; /* デフォルトフォント */
-    color: #ffffff; /* 全体のテキストカラー */
-}
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+} */
 
 .container {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    max-height: 100%;
     background-size: cover;
     background-position: center;
     color: #fff;
     flex-direction: column;
+    margin: 0;
 }
 
 .titleContainer {

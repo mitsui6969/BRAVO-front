@@ -1,0 +1,15 @@
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    background-image: url("/title.png");
+    background-size: 100% 100%;
+    font-family: Arial, sans-serif; /* デフォルトフォント */
+    color: #ffffff; /* 全体のテキストカラー */
+}
