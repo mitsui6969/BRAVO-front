@@ -6,6 +6,8 @@
     display: flex;
     flex-flow: column;
     height: 70%;
+    max-height: 80%;
+    max-width: 90%;
     aspect-ratio: 4/3;
     padding: 0;
     border-radius: 10px;
