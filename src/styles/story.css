@@ -1,3 +1,19 @@
+body {
+    background-color: black;
+}
+
+/* story.css */
+.fade-out-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+
 .chapter-background-image {
     height: 100%;
     width: 100%;

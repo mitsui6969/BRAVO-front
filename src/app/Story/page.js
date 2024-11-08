@@ -23,6 +23,7 @@ function Story() {
     const [choiceEnd, setChoiceEnd] = useState(null); // 選択肢の終わりのインデックス
     const [isLoading, setIsLoading] = useState(false);
     const [backgroundPic, setBackgroundPic] = useState(`/backImages/chapter${chapter}.png`); // 背景画像
+    const [isFading, setIsFading] = useState(false); // フェードインアウト
 
 
     useEffect(() => {
@@ -110,7 +111,8 @@ function Story() {
                 if (chapter === 4) {
                     router.push("/Ending");
                 } else {
-                    setChapter(chapter + 1);
+                    triggerFade(() => setChapter(chapter+1));
+                    // setChapter(chapter + 1);
                 }
                 return;
             }
@@ -131,7 +133,8 @@ function Story() {
             if (chapter === 4) {
                 router.push("/Ending");
             } else {
-                setChapter(chapter + 1);
+                triggerFade(() => setChapter(chapter+1))
+                // setChapter(chapter + 1);
             }
         }
     };
@@ -161,9 +164,17 @@ function Story() {
         
     };
 
+    const triggerFade = (callback) => {
+        setIsFading(true); // フェードアウト開始
+        setTimeout(() => {
+            callback();
+            setIsFading(false); // フェードイン開始
+        }, 500); // フェードアウト後の遅延時間（0.5秒）
+    };
+
 
     return (
-        <div className='chapter-background-image'>
+        <div className={`chapter-background-image ${isFading ? 'fade-out-in' : 'fade-in'}`}>
             <div className='StoryPage' onClick={handleNextSentence}>
                 <div className='charaPic'>
                     {peoplePic && <Image src={peoplePic} height={380} width={380} className={`characters ${peoplePosition === "right" ? "right" : "left"}`} alt={`${people}の立ち絵`} />}
