@@ -8,6 +8,8 @@ html {
 body {
     height: 100%;
     width: 100%;
+    margin: 0;
+    padding: 0;
     background-image: url("/title.png");
     background-size: 100% 100%;
     font-family: Arial, sans-serif; /* デフォルトフォント */

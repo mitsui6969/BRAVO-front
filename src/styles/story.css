@@ -1,28 +1,64 @@
-body {
-    background-image: url(/backImages/chapter1.png);
+.chapter-background-image {
     height: 100%;
-    width: 100vw;
+    width: 100%;
+}
+
+.backgound-pic-chapter {
+    z-index: -1;
 }
 
 .StoryPage {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     height: 90%;
     width: 80%;
-    margin: 0 auto;
-    background-color: rgb(255, 255, 255);
-    
+    /* background-color: rgb(255, 255, 255); */
 }
 
 .charaPic {
     position: relative;
-    height: 60%;
+    bottom: 0;
+    right: 0;
+    height: 65%;
+    width: 90%;
     padding: 0;
-    margin: 0;
-    background-color: aqua;
+    margin: 0 auto;
+    /* background-color: aqua; */
 }
 
+.characters {
+    display: flex;
+    justify-content: center;
+    min-height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+.characters.left {
+    position: absolute;
+}
+
+.characters.right {
+    position: absolute;
+    right: 0;
+}  
+
 .choices-area {
-    
+    position: absolute;
+    bottom: 5vh;
+    margin-left: 20px;
+    display: flex;
+    flex-flow: column;
+    width: 50%;
+    max-width: 400px;
+}
+
+.choiceBtn {
+    margin: 3px 0;
+    padding: 20px;
+    font-size: medium;
 }
 
 .display-area {
@@ -33,18 +69,25 @@ body {
     font-family: 'YuMincho';
     color: #ffff;
     margin: 0;
-    padding: 0;
-    background: linear-gradient(rgba(18, 18, 18, 0.798), 70%, rgba(255, 192, 203, 0));
+    padding-top: 10px;
+    border-radius: 5px;
+    background: linear-gradient(rgba(0, 0, 0, 0.864), 80%, rgba(255, 192, 203, 0));
 }
 
 .chara-name {
-    height: 6vh;
-    width: 90%;
+    position: relative;
+    top: 8px;
+    height: 20%;
+    width: 80%;
     margin: 0 auto;
-    background-color: antiquewhite;
+    vertical-align: bottom;
+    /* border-bottom: #fee193ac solid 2px; */
+    /* background-color: antiquewhite; */
 }
 
 .display-moji {
-    width: 90%;
+    position: relative;
+    top: 5px;
+    width: 80%;
     margin: 0 auto;
 }
