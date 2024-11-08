@@ -1,4 +1,4 @@
-.end-component{
+.end-component {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -6,12 +6,22 @@
     display: flex;
     flex-flow: column;
     height: 70%;
+    max-height: 80%;
+    max-width: 90%;
     aspect-ratio: 4/3;
     padding: 0;
     border-radius: 10px;
     background-image: url(/paper.png);
     color: rgba(36, 33, 32, 0.87);
+
+    opacity: 0; /* 最初は透明にする */
+    transition: opacity 0.8s ease-out;
 }
+
+.end-component.fade-in {
+    opacity: 1; /* フェードイン後に完全に表示 */
+}
+
 
 .end-contens {
     position: absolute;

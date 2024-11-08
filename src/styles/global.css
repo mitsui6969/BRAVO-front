@@ -15,3 +15,13 @@ body {
     font-family: Arial, sans-serif; /* デフォルトフォント */
     color: #ffffff; /* 全体のテキストカラー */
 }
+
+.fade-out-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
