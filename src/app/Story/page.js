@@ -109,7 +109,8 @@ function Story() {
             if (choiceEnd !== null && nextProgress > choiceEnd) {
                 console.log("選択肢の終わりに達しました");
                 if (chapter === 4) {
-                    router.push("/Ending");
+                    triggerFade(() => router.push("/Ending"));
+                    // router.push("/Ending");
                 } else {
                     triggerFade(() => setChapter(chapter+1));
                     // setChapter(chapter + 1);
@@ -131,7 +132,8 @@ function Story() {
         } else if (chapterData) {
             console.log("最後のセリフです");
             if (chapter === 4) {
-                router.push("/Ending");
+                triggerFade(() => router.push("/Ending"));
+                // router.push("/Ending");
             } else {
                 triggerFade(() => setChapter(chapter+1))
                 // setChapter(chapter + 1);

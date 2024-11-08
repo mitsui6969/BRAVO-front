@@ -3,7 +3,7 @@ body {
 }
 
 /* story.css */
-.fade-out-in {
+/* .fade-out-in {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
@@ -11,7 +11,7 @@ body {
 .fade-in {
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
-}
+} */
 
 
 .chapter-background-image {
