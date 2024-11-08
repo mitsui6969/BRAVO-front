@@ -165,7 +165,7 @@ function Story() {
     return (
         <div className='chapter-background-image'>
             <div className='StoryPage' onClick={handleNextSentence}>
-                <div className={`charaPic ${peoplePosition === "right" ? "right" : "left"}`}>
+                <div className='charaPic'>
                     {peoplePic && <Image src={peoplePic} height={380} width={380} className={`characters ${peoplePosition === "right" ? "right" : "left"}`} alt={`${people}の立ち絵`} />}
                 
                 {choices.length !== 0 && 
