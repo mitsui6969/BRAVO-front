@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import '/src/styles/story.css'
+import Button from '@/components/Button/Button';
 
 
 function Story() {
@@ -15,15 +16,18 @@ function Story() {
     const [display, setDisplay] = useState(''); // 表示する台詞
     const [people, setPeople] = useState(null); // 話者のキャラクター
     const [peoplePic, setPeoplePic] = useState(''); // 表示する立ち絵
+    const [peoplePosition, setPeoplePosition] = useState('left'); // 立ち絵位置
     const [chapter, setChapter] = useState(chapterParam || 1); // 現在の章
     const [chapterData, setChapterData] = useState(null); // 章のデータ
     const [choices, setChoices] = useState([]); // 選択肢のデータ
     const [choiceEnd, setChoiceEnd] = useState(null); // 選択肢の終わりのインデックス
     const [isLoading, setIsLoading] = useState(false);
+    const [backgroundPic, setBackgroundPic] = useState(`/backImages/chapter${chapter}.png`); // 背景画像
 
 
     useEffect(() => {
         fetchStory();
+        setBackgroundPic(`/backImages/chapter${chapter}.png`);
     }, [chapter]);
 
     const fetchStory = async () => {
@@ -47,44 +51,53 @@ function Story() {
     };
 
     const setSpeaker = (speakerId) => {
+        let character = "";
+        let characterPic = "";
+        let position = "left"; // Default position
+
         switch (speakerId) {
             case 0:
-                setPeople("");
-                setPeoplePic("");
+                character = "";
+                characterPic = "";
                 break;
             case 1:
-                setPeople("??");
-                setPeoplePic("");
+                character = "??";
+                characterPic = "";
                 break;
             case 2:
-                setPeople("グレンツェ");
-                setPeoplePic("/character/Grenze.png");
+                character = "グレンツェ";
+                characterPic = "/character/Grenze.png";
+                position = "right"; // グレンツェのみ右
                 break;
             case 3:
-                setPeople("ピーゲル");
-                setPeoplePic("/character/piegel.png");
+                character = "ピーゲル";
+                characterPic = "/character/piegel.png";
                 break;
             case 4:
-                setPeople("トルテ");
-                setPeoplePic("/character/torte.png");
+                character = "トルテ";
+                characterPic = "/character/torte.png";
                 break;
             case 5:
-                setPeople("欲望の王");
-                setPeoplePic("/character/king_desire.png");
+                character = "欲望の王";
+                characterPic = "/character/king_desire.png";
                 break;
             case 6:
-                setPeople("氷の女王");
-                setPeoplePic("/character/Queen_ice.png");
+                character = "氷の女王";
+                characterPic = "/character/Queen_ice.png";
                 break;
             case 7:
-                setPeople("トロイ");
-                setPeoplePic("/character/troy.png");
+                character = "トロイ";
+                characterPic = "/character/troy.png";
                 break;
             default:
-                setPeople("");
-                setPeoplePic("");
+                character = "";
+                characterPic = "";
                 break;
         }
+
+        setPeople(character);
+        setPeoplePic(characterPic);
+        setPeoplePosition(position);
     };
 
     const handleNextSentence = () => {
@@ -131,10 +144,9 @@ function Story() {
 
         const nextSentence = chapterData[nextProgress];
         setDisplay(nextSentence.sentence); // 選択肢に基づいたセリフを表示
-        setPeople(nextSentence.people); // 話者を設定
+        setSpeaker(nextSentence.people)// 話者を設定
         setChoices([]); // 選択肢をクリア
 
-        // 選択肢の範囲（end）を設定
         setChoiceEnd(choice.end);
 
         try {
@@ -151,27 +163,29 @@ function Story() {
 
 
     return (
-        <div className='StoryPage' onClick={handleNextSentence}>
-            <div className='charaPic'>
-                {peoplePic && <Image src={peoplePic} height={100} width={100} alt={`${people}の立ち絵`} />}
-            
-            {choices.length !== 0 && 
-                    <div className='choices-area'>
-                        <h2>選択肢</h2>
-                        {choices.map((choice) => (
-                            <button key={choice.id} onClick={() => handleChoice(choice)}>
-                                {choice.content}
-                            </button>
-                        ))}
-                    </div>
-            }
-        </div>
+        <div className='chapter-background-image'>
+            <div className='StoryPage' onClick={handleNextSentence}>
+                <div className={`charaPic ${peoplePosition === "right" ? "right" : "left"}`}>
+                    {peoplePic && <Image src={peoplePic} height={380} width={380} className={`characters ${peoplePosition === "right" ? "right" : "left"}`} alt={`${people}の立ち絵`} />}
+                
+                {choices.length !== 0 && 
+                        <div className='choices-area'>
+                            {choices.map((choice) => (
+                                <Button className='choiceBtn' key={choice.id} onClick={() => handleChoice(choice)}>
+                                    {choice.content}
+                                </Button>
+                            ))}
+                        </div>
+                }
+                </div>
 
-            <div className='display-area'>
-                <h3 className='chara-name'>{people}</h3>
-                <p className='display-moji'>{display}</p>
+                <div className='display-area'>
+                    <h3 className='chara-name'>{people}</h3>
+                    <p className='display-moji'>{display}</p>
+                </div>
             </div>
-
+            
+            <Image src={backgroundPic} fill style={{ objectFit: "cover" }} className='backgound-pic-chapter' alt='backgroundpic'/>
         </div>
     );
 }
